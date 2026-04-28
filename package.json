@@ -1,0 +1,13 @@
+{
+  "name": "alphi-portfolio",
+  "version": "1.0.0",
+  "description": "Mutual fund portfolio calculator",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "lint": "node --check server.js && node --check script.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

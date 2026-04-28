@@ -1,0 +1,6 @@
+Scheme Code;ISIN Div Payout/ ISIN Growth;ISIN Div Reinvestment;Scheme Name;Net Asset Value;Date
+100001;;;Sample Nifty 50 Index Fund - Direct Growth;245.1234;28-Apr-2026
+100002;;;Sample Flexi Cap Fund - Direct Growth;189.4400;28-Apr-2026
+100003;;;Sample ELSS Tax Saver Fund - Direct Growth;97.8800;28-Apr-2026
+100004;;;Sample Short Term Debt Fund - Direct Growth;35.2211;28-Apr-2026
+100005;;;Sample Large & Mid Cap Fund - Direct Growth;122.5099;28-Apr-2026
