@@ -35,3 +35,7 @@ A lightweight web app that fetches latest AMFI NAV data and calculates the portf
 The app binds to `process.env.PORT`, so it works with Railway's runtime requirements.
 
 If the upstream AMFI feed is temporarily unavailable, the app now serves bundled sample NAV data so the UI remains functional.
+
+## Git Merge Conflict Note
+This repo now includes `.gitattributes` to normalize line endings (`LF`) across platforms, which helps prevent noisy merge conflicts in web source files.
+

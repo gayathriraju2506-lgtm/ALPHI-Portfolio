@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# Keep frontend/source files normalized to reduce cross-platform merge conflicts
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
