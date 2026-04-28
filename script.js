@@ -1,6 +1,16 @@
 const funds = [];
 
-const NAV_URL = "https://api.allorigins.win/raw?url=https://www.amfiindia.com/spages/NAVAll.txt";
+const NAV_URL = "/api/nav";
+
+const fundSelect = document.getElementById("fundSelect");
+const unitsInput = document.getElementById("units");
+const resultEl = document.getElementById("result");
+const calcBtn = document.getElementById("calcBtn");
+
+function setStatus(message, isError = false) {
+    resultEl.textContent = message;
+    resultEl.className = isError ? "error" : "";
+}
 
 const fundSelect = document.getElementById("fundSelect");
 const unitsInput = document.getElementById("units");
@@ -24,6 +34,11 @@ async function loadFunds() {
         }
 
         const data = await response.text();
+
+        const source = response.headers.get("X-NAV-Data-Source");
+        if (source === "fallback") {
+            setStatus("Live NAV feed is unavailable. Using fallback sample data.", true);
+        }
         const lines = data.split("\n");
 
         lines.forEach((line) => {
@@ -45,12 +60,20 @@ async function loadFunds() {
 
         populateDropdown();
         calcBtn.disabled = false;
+
+        if (response.headers.get("X-NAV-Data-Source") !== "fallback") {
+            setStatus("Data loaded. Enter units to calculate portfolio value.");
+        }
         setStatus("Data loaded. Enter units to calculate portfolio value.");
     } catch (error) {
         setStatus(
             "Unable to load live NAV data right now. Please try again in a minute.",
             true,
         );
+
+        if (error?.message) {
+            console.error(`NAV load failed: ${error.message}`);
+        }
         console.error(error);
     }
 }

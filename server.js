@@ -4,6 +4,8 @@ const path = require('path');
 
 const port = Number(process.env.PORT) || 3000;
 const rootDir = __dirname;
+const AMFI_NAV_URL = 'https://www.amfiindia.com/spages/NAVAll.txt';
+const FALLBACK_NAV_FILE = path.join(rootDir, 'data', 'sample-nav.txt');
 
 const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -31,6 +33,42 @@ function sendFile(filePath, res) {
   });
 }
 
+async function proxyNav(res) {
+  try {
+    const response = await fetch(AMFI_NAV_URL, {
+      headers: {
+        'User-Agent': 'ALPHI-Portfolio/1.0'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`AMFI responded with status ${response.status}`);
+    }
+
+    const body = await response.text();
+
+    res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(body);
+  } catch (error) {
+    fs.readFile(FALLBACK_NAV_FILE, 'utf8', (fileError, fallbackData) => {
+      if (fileError) {
+        res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({
+          error: 'Unable to fetch NAV data from upstream.',
+          details: error.message
+        }));
+        return;
+      }
+
+      res.writeHead(200, {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'X-NAV-Data-Source': 'fallback'
+      });
+      res.end(fallbackData);
+    });
+  }
+}
+
 const server = http.createServer((req, res) => {
   if (!req.url) {
     res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
@@ -41,6 +79,11 @@ const server = http.createServer((req, res) => {
   if (req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify({ status: 'ok' }));
+    return;
+  }
+
+  if (req.url === '/api/nav') {
+    proxyNav(res);
     return;
   }
 
