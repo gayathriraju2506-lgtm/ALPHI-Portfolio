@@ -11,6 +11,7 @@ A lightweight web app that fetches latest AMFI NAV data and calculates the portf
 ## Data Source
 - AMFI NAV feed: https://www.amfiindia.com/spages/NAVAll.txt
 - Fetched through the app backend (`/api/nav`) to avoid browser CORS issues and proxy outages
+- Fetched through allorigins proxy to avoid browser CORS issues
 
 ## Run Locally
 1. Install dependencies:
@@ -39,3 +40,14 @@ If the upstream AMFI feed is temporarily unavailable, the app now serves bundled
 ## Git Merge Conflict Note
 This repo now includes `.gitattributes` to normalize line endings (`LF`) across platforms, which helps prevent noisy merge conflicts in web source files.
 
+
+## Deploy on Railway
+1. Push this repository to GitHub.
+2. In Railway, create a **New Project** and select **Deploy from GitHub Repo**.
+3. Choose this repository.
+4. Railway will auto-detect Node.js and run:
+   - `npm install`
+   - `npm start`
+5. Once deployed, open the generated Railway domain.
+
+The app binds to `process.env.PORT`, so it works with Railway's runtime requirements.

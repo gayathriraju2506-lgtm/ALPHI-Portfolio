@@ -12,6 +12,16 @@ function setStatus(message, isError = false) {
     resultEl.className = isError ? "error" : "";
 }
 
+const fundSelect = document.getElementById("fundSelect");
+const unitsInput = document.getElementById("units");
+const resultEl = document.getElementById("result");
+const calcBtn = document.getElementById("calcBtn");
+
+function setStatus(message, isError = false) {
+    resultEl.textContent = message;
+    resultEl.className = isError ? "error" : "";
+}
+
 async function loadFunds() {
     try {
         calcBtn.disabled = true;
@@ -54,6 +64,7 @@ async function loadFunds() {
         if (response.headers.get("X-NAV-Data-Source") !== "fallback") {
             setStatus("Data loaded. Enter units to calculate portfolio value.");
         }
+        setStatus("Data loaded. Enter units to calculate portfolio value.");
     } catch (error) {
         setStatus(
             "Unable to load live NAV data right now. Please try again in a minute.",
