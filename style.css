@@ -1,15 +1,16 @@
 body {
     font-family: Arial, sans-serif;
     background: #f5f7fa;
+    margin: 0;
 }
 
 .container {
-    width: 400px;
+    width: min(420px, calc(100% - 32px));
     margin: 80px auto;
     padding: 20px;
     background: white;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
@@ -21,10 +22,13 @@ label {
     margin-top: 15px;
 }
 
-select, input, button {
+select,
+input,
+button {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
+    box-sizing: border-box;
 }
 
 button {
@@ -35,6 +39,21 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+button:hover:not(:disabled) {
     background: #0056b3;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#result {
+    min-height: 30px;
+    margin-top: 16px;
+    font-size: 1.2rem;
+}
+
+#result.error {
+    color: #b00020;
 }
